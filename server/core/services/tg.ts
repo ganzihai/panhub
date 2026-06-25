@@ -72,7 +72,9 @@ export async function fetchTgChannelPosts(
     }
 
     if (page < maxPages - 1 && allResults.length < limit) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      // 随机 jitter 避免多频道并行时同步突发被 t.me 限流
+      const jitter = 50 + Math.floor(Math.random() * 100);
+      await new Promise((resolve) => setTimeout(resolve, jitter));
     }
   }
 
