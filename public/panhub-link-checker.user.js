@@ -3,7 +3,7 @@
 // @name:zh      PanHub 链接检测助手
 // @name:en      PanHub Link Checker
 // @namespace    https://panhub.shenzjd.com
-// @version      1.0.0
+// @version      1.0.1
 // @description  自动检测 PanHub 搜索结果中的失效网盘链接，标记已过期/已删除的资源，避免浪费时间点击
 // @description:en  Detect expired cloud storage links in PanHub search results and mark them with a strikethrough
 // @author       shenzjd
@@ -167,30 +167,18 @@
 
   const CHECKED_ATTR = "data-link-checked";
 
-  /** 标记链接为失效 */
+  /** 标记链接为失效（仅视觉提醒，不阻止点击，用户可自行验证） */
   function markExpired(linkEl) {
     linkEl.style.textDecoration = "line-through";
     linkEl.style.opacity = "0.5";
-    linkEl.style.cursor = "not-allowed";
-    linkEl.setAttribute("title", "⚠️ 链接已失效，点击可能无法访问");
+    linkEl.setAttribute("title", "⚠️ 该链接可能已失效（系统自动检测），点击可自行验证");
 
     // 添加失效标签
     const badge = document.createElement("span");
-    badge.textContent = "失效";
+    badge.textContent = "可能失效";
     badge.style.cssText =
       "display:inline-block;margin-left:6px;padding:1px 6px;font-size:11px;font-weight:600;color:#fff;background:#ef4444;border-radius:4px;vertical-align:middle;line-height:1.4;";
     linkEl.appendChild(badge);
-
-    // 点击失效链接时弹提示而非跳转
-    linkEl.addEventListener(
-      "click",
-      function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        alert("该链接已失效（分享已过期或被取消），无法访问。");
-      },
-      { once: true }
-    );
   }
 
   /** 标记链接为有效 */
