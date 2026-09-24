@@ -51,7 +51,7 @@
 
 ```bash
 docker build -t panhub.shenzjd.com .
-docker run -d --name panhub-web -p 8080:80 panhub.shenzjd.com
+docker run -d --name panhub.shenzjd.com -p 8080:80 panhub.shenzjd.com
 # 打开 http://localhost:8080
 ```
 
@@ -59,7 +59,7 @@ docker run -d --name panhub-web -p 8080:80 panhub.shenzjd.com
 
 ```bash
 docker pull ghcr.io/wu529778790/panhub.shenzjd.com:latest
-docker run -d --name panhub-web -p 8080:80 ghcr.io/wu529778790/panhub.shenzjd.com:latest
+docker run -d --name panhub.shenzjd.com -p 8080:80 ghcr.io/wu529778790/panhub.shenzjd.com:latest
 ```
 
 - 两阶段构建：Node 20 编译产物 → `nginx:1.27-alpine` 托管，镜像里不含源码与 node_modules
