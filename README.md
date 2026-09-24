@@ -45,22 +45,14 @@
 
 > 构建时 `base` 已设为相对路径，部署在子路径（如 `/仓库名/`）也能正常工作。
 
-### Docker（仓库已内置配置）
-
-本地构建（镜像名与仓库名保持一致）：
+### Docker（镜像由 CI 自动发布到 GHCR，push 到 `main` 即更新）
 
 ```bash
-docker build -t panhub.shenzjd.com .
-docker run -d --name panhub.shenzjd.com -p 8080:80 panhub.shenzjd.com
+docker run -d --name panhub.shenzjd.com -p 8080:80 ghcr.io/wu529778790/panhub.shenzjd.com:latest
 # 打开 http://localhost:8080
 ```
 
-或直接拉取 CI 自动构建并发布的镜像（push 到 `main` 即更新）：
-
-```bash
-docker pull ghcr.io/wu529778790/panhub.shenzjd.com:latest
-docker run -d --name panhub.shenzjd.com -p 8080:80 ghcr.io/wu529778790/panhub.shenzjd.com:latest
-```
+> 本地没有镜像时 `docker run` 会自动拉取，无需手动 build。
 
 - 两阶段构建：Node 20 编译产物 → `nginx:1.27-alpine` 托管，镜像里不含源码与 node_modules
 - nginx 已配好 gzip、协商缓存（产物文件名固定不打 hash，no-cache + ETag 保证发版即生效）
